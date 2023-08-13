@@ -32,20 +32,45 @@ int UpperBoundIterative(int *arr, int n, int target) {
     return ans;
 }
 
-int UpperBoundIterative(int *arr, int low, int high, int target) {
-    int ans = high + 1;
+// First Index using only plane Binary search
+int FirstIndex(int *arr, int n, int x) {
+    int low = 0;
+    int high = n - 1;
+    int first = -1;
 
     while(low <= high) {
         int mid = (low + high) / 2;
-        if(arr[mid] > target) {
-            ans = mid;
+
+        if(arr[mid] == x) {
+            first = mid;
             high = mid - 1;
         }
+        else if(arr[mid] > x)
+            high = mid - 1;
         else low = mid + 1;
     }
-    return ans;
+    return first;
 }
 
+// Last Index using only plane Binary search
+int LastIndex(int *arr, int n, int x) {
+    int low = 0;
+    int high = n - 1;
+    int last = -1;
+
+    while(low <= high) {
+        int mid = (low + high) / 2;
+
+        if(arr[mid] == x) {
+            last = mid;
+            low = mid + 1;
+        }
+        else if(arr[mid] > x)
+            high = mid - 1;
+        else low = mid + 1;
+    }
+    return last;
+}
 int main() {
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
@@ -72,4 +97,16 @@ int main() {
     
     cout << "First Index: " << ans.first << endl;
     cout << "Last Index: " << ans.second << endl;
+
+    cout << "-----------------"<<endl;
+
+    int fIndex = FirstIndex(arr, n, target);
+    if(fIndex == -1) {
+        cout << "First Index: " << fIndex << endl;
+        cout << "Last Index: " << -1 << endl;
+    }
+    else {
+        cout << "First Index: " << fIndex << endl;
+        cout << "Last Index: " << LastIndex(arr, n, target) << endl;
+    }
 }
