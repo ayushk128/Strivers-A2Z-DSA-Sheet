@@ -12,14 +12,20 @@ struct Node {
     }
 };
 
-void postorderTraversal(Node *node) {
-    if(node == NULL)
-        return;
-    
-    postorderTraversal(node->left);
-    postorderTraversal(node->right);
-    cout << node->data <<" ";
+void iterativePreorder(Node *node) {
+    if(node == NULL) return;
 
+    stack<Node *> s;
+    s.push(node);
+
+    while(!s.empty()) {
+        Node * curNode = s.top();
+        s.pop();
+
+        cout << curNode->data <<" ";
+        if(curNode->right != NULL) s.push(curNode->right);
+        if(curNode->left != NULL) s.push(curNode->left); 
+    }
 }
 int main() {
 
@@ -31,12 +37,12 @@ int main() {
     root->right = new Node(3);
     root->left->left = new Node(4);
     root->left->right = new Node(5);
-    root->left->right->left = new Node(6);
-    root->right->left = new Node(7);
-    root->right->right = new Node(8);
+    root->left->right->left = new Node(8);
+    root->right->left = new Node(6);
+    root->right->right = new Node(7);
     root->right->right->left = new Node(9);
     root->right->right->right = new Node(10);
 
-    postorderTraversal(root);
+    iterativePreorder(root);
 
 }

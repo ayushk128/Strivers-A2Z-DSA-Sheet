@@ -12,13 +12,22 @@ struct Node {
     }
 };
 
-void postorderTraversal(Node *node) {
-    if(node == NULL)
+void levelOrderTraversal(Node *node) {
+    if(node == NULL) 
         return;
-    
-    postorderTraversal(node->left);
-    postorderTraversal(node->right);
-    cout << node->data <<" ";
+
+    queue<Node *> q;
+    q.push(node);
+
+    while(!q.empty()) {
+        Node *currNode = q.front();
+        q.pop();
+
+        cout << currNode->data <<" ";
+
+        if(currNode->left != NULL) q.push(currNode->left);
+        if(currNode->right != NULL) q.push(currNode->right);
+    }
 
 }
 int main() {
@@ -37,6 +46,6 @@ int main() {
     root->right->right->left = new Node(9);
     root->right->right->right = new Node(10);
 
-    postorderTraversal(root);
+    levelOrderTraversal(root);
 
 }
