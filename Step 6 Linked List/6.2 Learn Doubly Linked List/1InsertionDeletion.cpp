@@ -156,6 +156,67 @@ void deleteNode(Node* temp) {
     temp->next = temp->back = nullptr;
     free(temp);
 }
+
+Node* insertAtHead(Node *head, int val) {
+    if(head == NULL) return new Node(val);
+
+    Node* newNode = new Node(val, head, nullptr);
+
+    head->back = newNode;
+
+    return newNode;
+}
+
+Node* insertBeforeTail(Node *head, int val) {
+    if(head == NULL) return new Node(val);
+    if(head->next == NULL) return insertAtHead(head, val);
+
+    Node *tail = head;
+    Node *prev = nullptr;
+    Node *front = nullptr;
+    while(tail->next != NULL) {
+        tail = tail->next;
+        prev = tail->back;
+    }
+
+    Node *newNode = new Node(val, tail, prev);
+
+    tail->back = newNode;
+    prev->next = newNode;
+
+    return head;
+
+}
+
+Node *insertBeforeKthNode(Node *head, int val, int k) {
+    if(k == 1){
+        return insertAtHead(head, val);
+    }
+
+    int cnt = 0;
+    Node *mover = head;
+    while(mover != NULL) {
+        cnt++;
+        if(cnt == k) {
+            break;
+        }
+        mover = mover->next;
+    }
+
+    Node *prev = mover->back;
+    Node *newNode = new Node(val, mover, prev);
+    prev->next = newNode;
+    mover->back = newNode;
+    return head;
+}
+
+void insertBeforeGivenNode(Node *node, int val) {
+    Node *prev = node->back;
+
+    Node *newNode = new Node(val, node, prev);
+    prev->next = newNode;
+    node->back = newNode;
+}
 int main()
 {
     freopen("input.txt", "r", stdin);
@@ -179,4 +240,15 @@ int main()
     deleteNode(head->next->next);
     traversal(head);
 
+    head = insertAtHead(head, 10);
+    traversal(head);
+
+    head = insertBeforeTail(head, 75);
+    traversal(head);
+
+    head = insertBeforeKthNode(head, 25, 3);
+    traversal(head);
+
+    insertBeforeGivenNode(head->next->next, 15);
+    traversal(head);
 }
