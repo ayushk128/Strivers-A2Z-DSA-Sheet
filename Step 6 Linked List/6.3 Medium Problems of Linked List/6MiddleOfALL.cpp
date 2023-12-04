@@ -30,43 +30,24 @@ void traversal(Node *head) {
     }
     cout << endl;
 }
-Node *reverseALLIterative(Node *head) {
-    Node *temp = head;
-    Node *prev = NULL;
+Node *middleOfLL(Node *head) {
+    Node *fast = head;
+    Node *slow = head;
 
-    while(temp) {
-        Node *front = temp->next;
-        temp->next = prev;
-        prev = temp;
-        temp = front;
+    while(fast != NULL && fast->next != NULL) {
+        slow = slow->next;
+        fast = fast->next->next;
     }
 
-    head = prev;
-    return head;
-}
-Node* reverseALLRecursive(Node *head) {
-    if(head == NULL || head->next == NULL) return head;
-
-    Node *newHead = reverseALLRecursive(head->next);
-
-    Node *front = head->next;
-    front->next = head;
-    head->next = NULL;
-
-    return newHead;
+    return slow;
 }
 int main()
 {
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 
-    vector<int> arr = {1, 2, 3, 4, 5};
-    int n = 2;
+    vector<int> arr = {1, 2, 3, 4, 5, 6};
     Node *head = convertToLL(arr);
-    traversal(head);
-    head = reverseALLIterative(head);
-    traversal(head);
-
-    head = reverseALLRecursive(head);
-    traversal(head);
+    Node *middle = middleOfLL(head);
+    traversal(middle);
 }

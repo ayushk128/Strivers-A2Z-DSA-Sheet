@@ -30,7 +30,7 @@ void traversal(Node *head) {
     }
     cout << endl;
 }
-Node *reverseALLIterative(Node *head) {
+Node *reverseLL(Node *head) {
     Node *temp = head;
     Node *prev = NULL;
 
@@ -41,32 +41,46 @@ Node *reverseALLIterative(Node *head) {
         temp = front;
     }
 
-    head = prev;
-    return head;
-}
-Node* reverseALLRecursive(Node *head) {
-    if(head == NULL || head->next == NULL) return head;
-
-    Node *newHead = reverseALLRecursive(head->next);
-
-    Node *front = head->next;
-    front->next = head;
-    head->next = NULL;
-
+    Node *newHead = prev;
     return newHead;
+}
+bool isPalindrome(Node *head) {
+    if(head == NULL || head->next == NULL) return true;
+    Node *fast = head;
+    Node *slow = head;
+
+    while(fast->next->next != NULL && fast->next != NULL) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    
+    Node *newHead = reverseLL(slow->next);
+    Node *first = head;
+    Node *second = newHead;
+
+    while(second) {
+        if(first->data != second->data) {
+            reverseLL(newHead);
+            return false;
+        }
+        first = first->next;
+        second = second->next;
+    }
+
+    reverseLL(newHead);
+    return true;
+    
 }
 int main()
 {
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 
-    vector<int> arr = {1, 2, 3, 4, 5};
-    int n = 2;
+    vector<int> arr = {1, 2, 2, 1};
     Node *head = convertToLL(arr);
-    traversal(head);
-    head = reverseALLIterative(head);
-    traversal(head);
 
-    head = reverseALLRecursive(head);
-    traversal(head);
+    if(isPalindrome(head)) {
+        cout << "Palindrome" << endl;
+    }
+    else cout << "Not Palindrome" << endl;
 }
