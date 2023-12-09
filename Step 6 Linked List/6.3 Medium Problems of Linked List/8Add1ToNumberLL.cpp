@@ -30,10 +30,11 @@ void traversal(Node *head) {
     }
     cout << endl;
 }
-Node *reverseLL(Node *head) {
+
+Node *reverse(Node *head) {
     Node *temp = head;
     Node *prev = NULL;
-
+    
     while(temp) {
         Node *front = temp->next;
         temp->next = prev;
@@ -41,46 +42,49 @@ Node *reverseLL(Node *head) {
         temp = front;
     }
 
-    Node *newHead = prev;
-    return newHead;
+    head = prev;
+    return head;
 }
-bool isPalindrome(Node *head) {
-    if(head == NULL || head->next == NULL) return true;
-    Node *fast = head;
-    Node *slow = head;
+Node *addOne(Node *head) {
 
-    while(fast->next->next != NULL && fast->next != NULL) {
-        slow = slow->next;
-        fast = fast->next->next;
-    }
-    
-    Node *newHead = reverseLL(slow->next);
-    Node *first = head;
-    Node *second = newHead;
+    int carry = 1;
+    head = reverse(head);
+    Node *temp = head;
 
-    while(second) {
-        if(first->data != second->data) {
-            reverseLL(newHead);
-            return false;
+    while(temp) {
+        temp->data = temp->data + carry;
+
+        if(temp->data < 10) {
+            carry = 0;
+            break;
         }
-        first = first->next;
-        second = second->next;
+        else {
+            temp->data = 0;
+            carry = 1;
+        }
+
+        temp = temp->next;
     }
 
-    reverseLL(newHead);
-    return true;
-    
+    if(carry == 1) {
+        Node *newNode = new Node(1);
+        head = reverse(head);
+        newNode->next = head;
+        head = newNode;
+    }
+
+    head = reverse(head);
+    return head;
 }
 int main()
 {
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 
-    vector<int> arr = {1, 2, 2, 1};
+    vector<int> arr = {1, 5, 9};
     Node *head = convertToLL(arr);
 
-    if(isPalindrome(head)) {
-        cout << "Palindrome" << endl;
-    }
-    else cout << "Not Palindrome" << endl;
+    head = addOne(head);
+    traversal(head);
+
 }
