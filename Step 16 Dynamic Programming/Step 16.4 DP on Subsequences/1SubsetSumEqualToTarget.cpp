@@ -36,9 +36,9 @@ bool subsetSumTabulation(vector<int> arr, int target) {
 
     for(int i = 1; i<n; i++) {
         for(int j = 1; j<=target; j++) {
-            bool notTake = dp[i - 1][target];
+            bool notTake = dp[i - 1][j];
             bool take = false;
-            if(j >= arr[i]) take = dp[i - 1][target - arr[i]];
+            if(j >= arr[i]) take = dp[i - 1][j - arr[i]];
 
             dp[i][j] = notTake || take;
         }
@@ -58,9 +58,9 @@ bool subsetSumSpaceOptimization(vector<int> arr, int target) {
 
     for(int i = 1; i<n; i++) {
         for(int j = 1; j<=target; j++) {
-            bool notTake = prev[target];
+            bool notTake = prev[j];
             bool take = false;
-            if(j >= arr[i]) take = prev[target - arr[i]];
+            if(j >= arr[i]) take = prev[j - arr[i]];
 
             curr[j] = notTake || take;
         }
