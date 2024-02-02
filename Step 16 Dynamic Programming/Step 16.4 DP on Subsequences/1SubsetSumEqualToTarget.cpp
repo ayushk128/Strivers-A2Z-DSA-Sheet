@@ -93,7 +93,5 @@ int main() {
     cout << subsetSumTabulation(arr, target) << endl;
 
     cout << subsetSumSpaceOptimization(arr, target) << endl;
-
-    cout << "aa" << endl;
     
 }
