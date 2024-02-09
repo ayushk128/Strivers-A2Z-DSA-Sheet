@@ -38,6 +38,7 @@ int numberOfSubsetsMemoization(int ind, int sum, vector<int> arr, vector<vector<
 //         dp[i][0] = 1;
 //     }
 // }
+
 int main() {
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
