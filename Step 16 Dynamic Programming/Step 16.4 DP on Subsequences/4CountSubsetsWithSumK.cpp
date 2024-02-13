@@ -30,14 +30,6 @@ int numberOfSubsetsMemoization(int ind, int sum, vector<int> arr, vector<vector<
     return dp[ind][sum] = notTake + take;
 }
 
-// int numberOfSubsetsTabulation(int sum, vector<int> arr) {
-//     int n = arr.size();
-//     vector<vector<int>> dp(n, vector<int>(sum + 1, 0));
-
-//     for(int i = 0; i<n; i++) {
-//         dp[i][0] = 1;
-//     }
-// }
 
 int main() {
     freopen("input.txt", "r", stdin);
@@ -58,6 +50,8 @@ int main() {
 
     vector<vector<int>> dp(n, vector<int>(k + 1, -1));
     cout << numberOfSubsetsMemoization(n - 1, k, arr, dp) << endl;
+
+    // cout << numberOfSubsetsTabulation(arr, k) << endl;
 
 
 }

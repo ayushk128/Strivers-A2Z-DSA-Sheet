@@ -1,6 +1,5 @@
 #include<bits/stdc++.h>
 using namespace std;
-
 int minimumSubsetSumDifference(vector<int> &arr, int sum) {
     int n = arr.size();
     vector<vector<bool>> dp(n, vector<bool>(sum + 1, 0));
